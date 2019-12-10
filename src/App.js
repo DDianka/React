@@ -12,33 +12,40 @@ class App extends React.Component {
           users: []
         }
     };
+   
     onSurnameChange = (event) => {
       this.setState({
         userSurname: event.target.value
       });
     };
+    
     onNameChange = (event) => {
       this.setState({
         userName: event.target.value
       });
     };
+    
     onPatronymicChange = (event) => {
       this.setState({
         userPatronymic: event.target.value
       });
     };
-     isValid = (userSurname, userName, userPatronymic) => {
+     
+    isValid = (userSurname, userName, userPatronymic) => {
       return userSurname && userName && userPatronymic
     };
+    
     onSubmit = () => {
       if (this.isValid(this.state.userSurname, this.state.userName, this.state.userPatronymic)) {
       this.setState({
         users: this.state.users.concat({
           userSurname: this.state.userSurname,
-          userName: this.state.users.userName,
-          userPatronymic: this.state.users.userPatronymic
+          userName: this.state.userName,
+          userPatronymic: this.state.userPatronymic
         })
       })
+    } else {
+      alert("Заполните пустое поле")
     }
     };
     onRemoveBtn = (indexToRemove) => {
@@ -49,9 +56,11 @@ class App extends React.Component {
       });
     };
     render() {
+      console.log(this.state.users);
     return (
     <div className="container">
       <div>
+        <div>
         <label htmlFor="inpSurname">Фамилия</label>
         <input type="text" value={this.state.userSurname} onChange={this.onSurnameChange} id="inpSurname" className="field"/>
       </div>
@@ -63,7 +72,8 @@ class App extends React.Component {
         <label htmlFor="inpPatronymic">Отчество</label>
         <input type="text" value={this.state.userPatronymic} onChange={this.onPatronymicChange} className="field"></input>
       </div>
-      <button onClick={this.onSubmit} id="btn"> SUBMIT </button>
+      <button onClick={this.onSubmit} id="btn"> submit </button>
+      </div>
       <table>
         <thead>
           <tr>
@@ -80,7 +90,7 @@ class App extends React.Component {
             <td>{user.userSurname}</td>
             <td>{user.userName}</td>
             <td>{user.userPatronymic}</td>
-            <td onCLick = {() => this.onRemoveBtn(index)} className="remover">[x]</td>
+            <td onClick = {() => this.onRemoveBtn(index)} className="remover">[x]</td>
           </tr>
             })
           }
