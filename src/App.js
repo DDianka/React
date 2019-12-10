@@ -12,7 +12,7 @@ class App extends React.Component {
           users: []
         }
     };
-   
+
     onSurnameChange = (event) => {
       this.setState({
         userSurname: event.target.value
@@ -56,47 +56,36 @@ class App extends React.Component {
       });
     };
     render() {
-      console.log(this.state.users);
     return (
-    <div className="container">
-      <div>
-        <div>
-        <label htmlFor="inpSurname">Фамилия</label>
-        <input type="text" value={this.state.userSurname} onChange={this.onSurnameChange} id="inpSurname" className="field"/>
-      </div>
-      <div>
-        <label htmlFor="inpName">Имя</label>
-        <input type="text" value={this.state.userName} onChange={this.onNameChange} className="field"></input>
-      </div>
-      <div>
-        <label htmlFor="inpPatronymic">Отчество</label>
-        <input type="text" value={this.state.userPatronymic} onChange={this.onPatronymicChange} className="field"></input>
-      </div>
-      <button onClick={this.onSubmit} id="btn"> submit </button>
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Фамилия</th>
-           <th>Имя</th>
-            <th>Отчество</th>
-            <th>Удалить</th>
-          </tr>
-        </thead>
-        <tbody>
+        <div className="container">
+          <UserForm user = {this.props} >
           {
-            this.state.users.map((user, index) => {
-          return <tr>
-            <td>{user.userSurname}</td>
-            <td>{user.userName}</td>
-            <td>{user.userPatronymic}</td>
-            <td onClick = {() => this.onRemoveBtn(index)} className="remover">[x]</td>
-          </tr>
-            })
-          }
-        </tbody>
-      </table>
-    </div>
+            this.state.users && this.state.users.length > 0 && (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Фамилия</th>
+                   <th>Имя</th>
+                    <th>Отчество</th>
+                    <th>Удалить</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {
+                        this.state.users.map((user, index) => {
+                      return <tr>
+                        <td>{user.userSurname}</td>
+                        <td>{user.userName}</td>
+                        <td>{user.userPatronymic}</td>
+                        <td onClick = {() => this.onRemoveBtn(index)} className="remover">[x]</td>
+                      </tr>
+                        })
+                }
+                    </tbody>
+                </table>
+                )
+              }
+        </div>
     )
     };
 };
