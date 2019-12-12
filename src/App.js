@@ -1,18 +1,33 @@
 import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
+import {UserForm} from "./UserForm.jsx"
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import HomePage from "./Home";
+import ListPage from "./List"
+
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+        user: {
           userSurname: "",
           userName: "",
           userPatronymic: "",
           users: []
+            }
         }
     };
-
+    onChangeHandler = (event, user) => {
+       console.log(event, user);
+       // добавить данные в state
+};
     onSurnameChange = (event) => {
       this.setState({
         userSurname: event.target.value
@@ -57,8 +72,33 @@ class App extends React.Component {
     };
     render() {
     return (
-        <div className="container">
-          <UserForm user = {this.props} >
+         <Router>
+              <div>
+                <nav>
+                  <ul>
+                    <li>
+                      <Link to="/home">Home</Link>
+                    </li>
+                    <li>
+                      <Link to="/list">List</Link>
+                    </li>
+                  </ul>
+                </nav>
+
+                {/* A <Switch> looks through its children <Route>s and
+                    renders the first one that matches the current URL. */}
+                <Switch>
+                  <Route path="/list">
+                    <ListPage/>
+                  </Route>
+                  <Route path="/home">
+                    <HomePage/>
+                  </Route>
+                </Switch>
+              </div>
+            </Router>
+        /*<div className="container">
+          <UserForm user={this.state.user} motherFucker={this.onChangeHandler}/>
           {
             this.state.users && this.state.users.length > 0 && (
               <table>
@@ -85,7 +125,7 @@ class App extends React.Component {
                 </table>
                 )
               }
-        </div>
+        </div>*/
     )
     };
 };
