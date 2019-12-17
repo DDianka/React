@@ -95,7 +95,7 @@ class App extends React.Component {
                               onRemove={this.onRemoveBtn}
                     />
                   </Route>
-                    <Route path="/details/:index" children={<UserDetails users={this.state.users} />} />
+                    <Route path="/details/:index" component={UserDetails} />
                 </Switch>
               </div>
 
