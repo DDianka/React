@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import {UserForm} from "./UserForm.jsx"
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,7 +7,8 @@ import {
   Link
 } from "react-router-dom";
 import HomePage from "./Home";
-import ListPage from "./List"
+import ListPage from "./List" ;
+import UserDetails from "./Details";
 
 class App extends React.Component {
     constructor(props) {
@@ -19,6 +19,11 @@ class App extends React.Component {
           userPatronymic: "",
           users: []
         }
+    };
+    onTableClick = (event) => {
+        this.setState({
+            users: event.target.value
+        })
     };
     onSurnameChange = (event) => {
       this.setState({
@@ -39,7 +44,6 @@ class App extends React.Component {
       return userSurname && userName && userPatronymic
     };
     onSubmit = () => {
-        console.log("triggered", this.state)
       if (this.isValid(this.state.userSurname, this.state.userName, this.state.userPatronymic)) {
       this.setState({
         users: this.state.users.concat({
@@ -53,7 +57,6 @@ class App extends React.Component {
     }
     };
     onRemoveBtn = (indexToRemove) => {
-        console.log("f", this.state);
         this.setState({
         users: this.state.users.filter(function (item, index) {
           return indexToRemove !== index
@@ -92,8 +95,10 @@ class App extends React.Component {
                               onRemove={this.onRemoveBtn}
                     />
                   </Route>
+                    <Route path="/details/:index" children={<UserDetails users={this.state.users} />} />
                 </Switch>
               </div>
+
             </Router>
         )
     };

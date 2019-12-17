@@ -1,9 +1,10 @@
 import React from "react";
+import {Link} from "react-router-dom";
+
 
 
 export default class ListPage extends React.Component {
     render() {
-        console.log(this.props.users)
         return (<div>
             <h1>  List Page </h1>
             <div className="container">
@@ -21,11 +22,11 @@ export default class ListPage extends React.Component {
                         <tbody>
                         {
                             this.props.users.map((users, index) => {
-                                return <tr>
-                                    <td>{users.userSurname}</td>
-                                    <td>{users.userName}</td>
-                                    <td>{users.userPatronymic}</td>
-                                    <td onClick={this.props.onRemoveBtn} className="remover">[x]</td>
+                                return <tr key={index}>
+                                    <td> <Link to={`/details/${index}`}>{users.userSurname}</Link></td>
+                                    <td><Link to={`/details/${index}`}>{users.userName}</Link></td>
+                                    <td><Link to={`/details/${index}`}>{users.userPatronymic}</Link></td>
+                                    <td onClick={() => this.props.onRemove(index)} className="remover">[x]</td>
                                 </tr>
                             })
                         }
@@ -34,7 +35,6 @@ export default class ListPage extends React.Component {
                 )
             }
             </div>
-
         </div>)
     }
 }

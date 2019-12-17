@@ -14,7 +14,7 @@ export default class HomePage extends React.Component {
                           onSubmit={this.props.onSubmit}
                 />
                 <List users={this.props.users}
-                      onRemove={this.props.onRemoveBtn}
+                      onRemove={this.props.onRemove}
                 />
             </div>
         )
