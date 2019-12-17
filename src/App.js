@@ -1,5 +1,4 @@
 import React from 'react';
-// import logo from './logo.svg';
 import './App.css';
 import {UserForm} from "./UserForm.jsx"
 import {
@@ -11,46 +10,36 @@ import {
 import HomePage from "./Home";
 import ListPage from "./List"
 
-
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-        user: {
           userSurname: "",
           userName: "",
           userPatronymic: "",
           users: []
-            }
         }
     };
-    onChangeHandler = (event, user) => {
-       console.log(event, user);
-       // добавить данные в state
-};
     onSurnameChange = (event) => {
       this.setState({
         userSurname: event.target.value
       });
     };
-    
     onNameChange = (event) => {
       this.setState({
         userName: event.target.value
       });
     };
-    
     onPatronymicChange = (event) => {
       this.setState({
         userPatronymic: event.target.value
       });
     };
-     
     isValid = (userSurname, userName, userPatronymic) => {
       return userSurname && userName && userPatronymic
     };
-    
     onSubmit = () => {
+        console.log("triggered", this.state)
       if (this.isValid(this.state.userSurname, this.state.userName, this.state.userPatronymic)) {
       this.setState({
         users: this.state.users.concat({
@@ -64,7 +53,8 @@ class App extends React.Component {
     }
     };
     onRemoveBtn = (indexToRemove) => {
-      this.setState({
+        console.log("f", this.state);
+        this.setState({
         users: this.state.users.filter(function (item, index) {
           return indexToRemove !== index
         })
@@ -84,49 +74,28 @@ class App extends React.Component {
                     </li>
                   </ul>
                 </nav>
-
-                {/* A <Switch> looks through its children <Route>s and
-                    renders the first one that matches the current URL. */}
                 <Switch>
                   <Route path="/list">
-                    <ListPage/>
+                    <ListPage users={this.state.users}
+                              onRemove={this.onRemoveBtn}
+                    />
                   </Route>
                   <Route path="/home">
-                    <HomePage/>
+                    <HomePage userName={this.state.userName}
+                              userSurname={this.state.userSurname}
+                              userPatronimyc={this.state.userPatronymic}
+                              users={this.state.users}
+                              onNameChange={this.onNameChange}
+                              onSurnameChange={this.onSurnameChange}
+                              onPatronymicChange={this.onPatronymicChange}
+                              onSubmit={this.onSubmit}
+                              onRemove={this.onRemoveBtn}
+                    />
                   </Route>
                 </Switch>
               </div>
             </Router>
-        /*<div className="container">
-          <UserForm user={this.state.user} motherFucker={this.onChangeHandler}/>
-          {
-            this.state.users && this.state.users.length > 0 && (
-              <table>
-                <thead>
-                  <tr>
-                    <th>Фамилия</th>
-                   <th>Имя</th>
-                    <th>Отчество</th>
-                    <th>Удалить</th>
-                  </tr>
-                </thead>
-                <tbody>
-                {
-                        this.state.users.map((user, index) => {
-                      return <tr>
-                        <td>{user.userSurname}</td>
-                        <td>{user.userName}</td>
-                        <td>{user.userPatronymic}</td>
-                        <td onClick = {() => this.onRemoveBtn(index)} className="remover">[x]</td>
-                      </tr>
-                        })
-                }
-                    </tbody>
-                </table>
-                )
-              }
-        </div>*/
-    )
+        )
     };
 };
 
